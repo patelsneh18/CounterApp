@@ -1,5 +1,7 @@
 # Intents Playground Counter App
 
+Download apk by clicking [here](https://github.com/patelsneh18/CounterApp/releases/download/1.0/app-debug.apk)
+
 ## Features of Application
 
 - Increment and decrement counter
