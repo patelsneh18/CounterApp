@@ -19,6 +19,7 @@ public class IntentsPlaygroundActivity extends AppCompatActivity {
 
     private static final int REQUEST_COUNT = 0;
     private int count;
+    private int flag = 0;
     ActivityIntentsPlaygroundBinding b;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +28,11 @@ public class IntentsPlaygroundActivity extends AppCompatActivity {
         setupHideErrorForEditText();
         if (savedInstanceState!= null){
             count = savedInstanceState.getInt(Constants.FINAL);
-            b.result.setText("Final count recieved : " + count);
-            b.result.setVisibility(View.VISIBLE);
+            if (flag == 1) {
+                b.result.setText("Final count recieved : " + count);
+                b.result.setVisibility(View.VISIBLE);
+            }
+
         }
     }
 
@@ -115,6 +119,7 @@ public class IntentsPlaygroundActivity extends AppCompatActivity {
 
             //Show data
             b.result.setText("Final count recieved : " + count);
+            flag = 1;
             b.result.setVisibility(View.VISIBLE);
         }
     }
