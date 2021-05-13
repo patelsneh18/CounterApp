@@ -1,11 +1,13 @@
 package com.google.firebase.udacity.counterapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -16,13 +18,20 @@ import com.google.firebase.udacity.counterapp.databinding.ActivityIntentsPlaygro
 public class IntentsPlaygroundActivity extends AppCompatActivity {
 
     private static final int REQUEST_COUNT = 0;
+    private int count;
     ActivityIntentsPlaygroundBinding b;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupLayout();
         setupHideErrorForEditText();
+        if (savedInstanceState!= null){
+            count = savedInstanceState.getInt(Constants.FINAL);
+            b.result.setText("Final count recieved : " + count);
+            b.result.setVisibility(View.VISIBLE);
+        }
     }
+
 
     //Initial Setup methods
 
@@ -39,7 +48,7 @@ public class IntentsPlaygroundActivity extends AppCompatActivity {
      * TextWatcher which hides error when text changes
      */
     private void setupHideErrorForEditText(){
-        b.textField.getEditText().addTextChangedListener(new TextWatcher() {
+        TextWatcher textWatcher= new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -54,7 +63,10 @@ public class IntentsPlaygroundActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
 
             }
-        });
+        };
+
+        b.textField.getEditText().addTextChangedListener(textWatcher);
+        b.sendDataField.getEditText().addTextChangedListener(textWatcher);
     }
 
     //Event Handlers
@@ -99,7 +111,7 @@ public class IntentsPlaygroundActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_COUNT && resultCode == RESULT_OK){
             //get data
-            int count = data.getIntExtra(Constants.FINAL_VALUE,Integer.MIN_VALUE);
+            count = data.getIntExtra(Constants.FINAL_VALUE,Integer.MIN_VALUE);
 
             //Show data
             b.result.setText("Final count recieved : " + count);
@@ -198,4 +210,11 @@ public class IntentsPlaygroundActivity extends AppCompatActivity {
     private void hideError(){
         b.textField.setError(null);
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(Constants.FINAL, count);
+    }
+
 }

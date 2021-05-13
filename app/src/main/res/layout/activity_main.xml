@@ -56,5 +56,5 @@
         android:gravity="center|center_horizontal|center_vertical"
         android:onClick="sendCount"
         android:text="@string/send_back"
-        android:visibility="visible" />
+        android:visibility="gone" />
 </LinearLayout>

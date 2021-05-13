@@ -1,9 +1,11 @@
 package com.google.firebase.udacity.counterapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(b.getRoot());
         setupEventHandlers();
         getInitCount();
+
+        if (savedInstanceState != null) {
+            qty = savedInstanceState.getInt(Constants.COUNT);
+            b.qty.setText("" + qty);
+        }
     }
 
     /**
@@ -33,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private void getInitCount() {
         Bundle bundle = getIntent().getExtras();
+        if (bundle==null) return;
+
         qty = bundle.getInt(Constants.INITIAL_COUNT_KEY, 0);
         maxVal = bundle.getInt(Constants.MAX_VALUE,Integer.MAX_VALUE);
         minVal = bundle.getInt(Constants.MIN_VALUE,Integer.MIN_VALUE);
@@ -94,5 +103,12 @@ public class MainActivity extends AppCompatActivity {
         qty++;
         b.qty.setText("" + qty);
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(Constants.COUNT,qty);
+    }
+
 
 }
