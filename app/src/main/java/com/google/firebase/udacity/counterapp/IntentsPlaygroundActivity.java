@@ -18,7 +18,7 @@ import com.google.firebase.udacity.counterapp.databinding.ActivityIntentsPlaygro
 public class IntentsPlaygroundActivity extends AppCompatActivity {
 
     private static final int REQUEST_COUNT = 0;
-    private int count;
+    private int count=101;
     private int flag = 0;
     ActivityIntentsPlaygroundBinding b;
     @Override
@@ -28,11 +28,10 @@ public class IntentsPlaygroundActivity extends AppCompatActivity {
         setupHideErrorForEditText();
         if (savedInstanceState!= null){
             count = savedInstanceState.getInt(Constants.FINAL);
-            if (flag == 1) {
+            if (count!=101){
                 b.result.setText("Final count recieved : " + count);
                 b.result.setVisibility(View.VISIBLE);
             }
-
         }
     }
 
